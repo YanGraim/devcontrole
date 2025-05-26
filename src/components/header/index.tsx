@@ -38,7 +38,7 @@ export function Header() {
 
         {status === "authenticated" && (
           <div className="flex items-baseline gap-4">
-            <Link href={"#"} className="hover:scale-95 duration-300">
+            <Link href={"/dashboard"} className="hover:scale-95 duration-300">
               <FiUser size={24} color="#4b556" />
             </Link>
 

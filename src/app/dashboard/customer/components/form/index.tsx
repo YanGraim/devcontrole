@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@/components/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,10 +23,52 @@ export function NewCustomerForm() {
         resolver: zodResolver(schema)
     })
 
+
+    function handleRegisterCustomer(data: FormData) {
+        console.log(data)
+    }
+
     return (
-        <form>
-            <label>Nome completo</label>
-            <input type="text" placeholder="Digite o nome" />
+        <form className="flex flex-col mt-6" onSubmit={handleSubmit(handleRegisterCustomer)}>
+            <label className="font-medium text-lg mb-1">Nome completo <span className="text-red-500">*</span></label>
+            <Input
+                type="text"
+                name="name"
+                placeholder="Digite o nome completo"
+                error={errors.name?.message}
+                register={register}
+            />
+            <section className="flex flex-col gap-2 my-2 md:flex-row">
+                <div className="flex-1">
+                    <label className="font-medium text-lg mb-1">Email <span className="text-red-500">*</span></label>
+                    <Input
+                        type="email"
+                        name="email"
+                        placeholder="Digite o email"
+                        error={errors.email?.message}
+                        register={register}
+                    />
+                </div>
+                <div className="flex-1">
+                    <label className="font-medium text-lg mb-1">Telefone <span className="text-red-500">*</span></label>
+                    <Input
+                        type="tel"
+                        name="phone"
+                        placeholder="(DD) XXXXXXXXX"
+                        error={errors.phone?.message}
+                        register={register}
+                    />
+                </div>
+            </section>
+            <label className="font-medium text-lg mb-1">Endereço</label>
+            <Input
+                type="text"
+                name="address"
+                placeholder="Digite o endereço"
+                error={errors.address?.message}
+                register={register}
+            />
+            <button type="submit" className="bg-blue-500 my-4 py-2 rounded text-white font-medium cursor-pointer">Cadastrar</button>
         </form>
     )
 }

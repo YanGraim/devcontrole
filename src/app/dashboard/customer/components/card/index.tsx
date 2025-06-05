@@ -1,6 +1,6 @@
 export function CardCustomer() {
     return (
-        <article className="flex flex-col bg-gray-100 border border-slate-200 p-2 gap-2 rounded-lg hover:scale-105 duration-300">
+        <article className="flex flex-col bg-gray-100 border border-slate-200 p-2 gap-2 rounded-lg hover:-translate-y-1 hover:shadow-xl transition duration-300 select-none">
             <h2>
                 <span className="font-bold">Nome:</span> Mercado do Doda
             </h2>

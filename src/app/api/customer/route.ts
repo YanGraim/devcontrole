@@ -9,11 +9,20 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const { name, email, phone, address } = await request.json();
+    const { name, email, phone, address, userId } = await request.json();
 
     try {
-        await PrismaClient
+        await PrismaClient.customer.create({
+            data: {
+                name,
+                phone,
+                email,
+                address: address ? address : "",
+                userId: userId
+            }
+        })
 
+        return NextResponse.json({ message: "Cliente cadastrado com sucesso!" }, { status: 200 })
     } catch (error) {
         return NextResponse.json({ error: "Falied create new customer" }, { status: 400 })
     }

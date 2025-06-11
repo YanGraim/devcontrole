@@ -1,5 +1,5 @@
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const { name, email, phone, address, userId } = await request.json();
 
     try {
-        await PrismaClient.customer.create({
+        await prisma.customer.create({
             data: {
                 name,
                 phone,

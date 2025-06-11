@@ -40,8 +40,17 @@ export async function DELETE(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("id");
+    const findTicket = await prisma.tickect.findFirst({
+        where: {
+            customerId: userId
+        }
+    })
 
     if (!userId) {
+        return NextResponse.json({ error: "Falied delete customer" }, { status: 400 })
+    }
+
+    if (findTicket) {
         return NextResponse.json({ error: "Falied delete customer" }, { status: 400 })
     }
 

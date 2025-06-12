@@ -1,7 +1,23 @@
 import { Container } from "@/components/container";
+import { authOptions } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function NewTicket() {
+export default async function NewTicket() {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+        redirect("/");
+    }
+
+    const customers = await prisma.customer.findMany({
+        where: {
+            userId: session.user.id
+        }
+    })
+
     return (
         <Container>
             <main className="mt-9 mb-2">
@@ -19,10 +35,21 @@ export default function NewTicket() {
                 <label className="font-medium">Descreva o problema</label>
                 <textarea className="w-full border border-slate-400 rounded-md h-24 px-2 mb-2 resize-none outline-none required"></textarea>
 
-                <label className="font-medium">Selecione o cliente</label>
-                <select className="w-full border border-slate-400 rounded-md h-11 px-2 mb-2 resize-none outline-none required">
-                    <option value="cliente1">Cliente 1</option>
-                </select>
+                {customers.length !== 0 && (
+                    <>
+                        <label className="font-medium">Selecione o cliente</label>
+                        <select className="w-full border border-slate-400 rounded-md h-11 px-2 mb-2 resize-none outline-none required">
+                            {customers.map((customer) => (
+                                <option value={customer.id} key={customer.id}>{customer.name}</option>
+                            ))}
+                        </select>
+                    </>
+                )}
+                {customers.length === 0 && (
+                    <Link href="">
+                        Você ainda não tem nenhum cliente, <span>cadastar cliente.</span>
+                    </Link>
+                )}
             </form>
         </Container>
     )

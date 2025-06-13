@@ -27,6 +27,17 @@ export default async function NewTicket() {
         if (!name || !description || !customerId) {
             return;
         }
+
+        await prisma.tickect.create({
+            data: {
+                name: name as string,
+                description: description as string,
+                customerId: customerId as string,
+                status: "ABERTO",
+                userId: session?.user.id
+            }
+        })
+        redirect("/dashboard")
     }
 
     return (

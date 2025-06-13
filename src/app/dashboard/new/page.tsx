@@ -46,10 +46,16 @@ export default async function NewTicket() {
                     </>
                 )}
                 {customers.length === 0 && (
-                    <Link href="">
-                        Você ainda não tem nenhum cliente, <span>cadastar cliente.</span>
+                    <Link href="/dashboard/customer/new">
+                        Você ainda não tem nenhum cliente, <span className="text-blue-500 font-medium">cadastar cliente.</span>
                     </Link>
                 )}
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white font-bold px-2 my-4 h-11 rounded-md cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    disabled={customers.length === 0}>
+                    Cadastrar
+                </button>
             </form>
         </Container>
     )

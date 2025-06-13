@@ -1,5 +1,6 @@
 "use client";
 
+import { ModalTicket } from "@/components/modal";
 import { createContext, ReactNode, useState } from "react";
 
 interface ModalContextData {
@@ -10,7 +11,7 @@ interface ModalContextData {
 export const ModalContext = createContext({} as ModalContextData);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(true);
 
     function handleModalVisible() {
         setVisible(!visible);
@@ -18,6 +19,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <ModalContext.Provider value={{ visible, handleModalVisible }}>
+            {visible && <ModalTicket />}
             {children}
         </ModalContext.Provider>
     )

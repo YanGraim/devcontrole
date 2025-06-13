@@ -28,7 +28,7 @@ export default async function NewTicket() {
             return;
         }
 
-        await prisma.tickect.create({
+        await prisma.ticket.create({
             data: {
                 name: name as string,
                 description: description as string,

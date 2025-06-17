@@ -19,22 +19,26 @@ interface CustomerDataInfo {
 }
 
 export default function OpenTicket() {
-    const [customer, setCustomer] = useState<CustomerDataInfo | null>({
-        id: "1",
-        name: "graim"
-    });
+    const [customer, setCustomer] = useState<CustomerDataInfo | null>(null);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema)
     });
+
+    function handleClearCustomer() {
+        setCustomer(null);
+        setValue("email", "");
+    }
 
     return (
         <div className="w-full max-w-2xl mx-auto px-2">
             <h1 className="font-bold text-3xl mt-24 text-center">Abrir chamado</h1>
             <main className="flex flex-col mt-4 mb-2">
                 {customer ? (
-                    <div className="flex items-centerssss justify-between bg-slate-200 py-6 px-2 rounded border border-slate-400">
-                        <p><strong>Cliente selecionado:</strong> {customer.name}</p>
-                        <button className="bg-red-500 flex items-center justify-center rounded cursor-pointer"><FiX size={24} color="#fff" /></button>
+                    <div className="flex items-centerssss justify-between bg-slate-200 py-6 px-4 rounded border border-slate-400">
+                        <p className="text-lg"><strong>Cliente selecionado:</strong> {customer.name}</p>
+                        <button className="flex items-center justify-center rounded cursor-pointer" onClick={handleClearCustomer}>
+                            <FiX size={26} color="#ff2929" />
+                        </button>
                     </div>
                 ) : (
                     <form className="bg-slate-200 py-6 px-2 rounded border border-slate-400">

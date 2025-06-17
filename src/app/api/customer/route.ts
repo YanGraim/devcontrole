@@ -40,7 +40,7 @@ export async function DELETE(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("id");
-    const findTicket = await prisma.tickect.findFirst({
+    const findTicket = await prisma.ticket.findFirst({
         where: {
             customerId: userId
         }
@@ -66,4 +66,26 @@ export async function DELETE(request: Request) {
         console.log(error)
         return NextResponse.json({ error: "Falied delete customer" }, { status: 400 })
     }
+}
+
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const customerEmail = searchParams.get("email");
+
+    if (!customerEmail || customerEmail === "") {
+        return NextResponse.json({ message: "Customer not found" }, { status: 400 });
+    }
+
+    try {
+        const customer = await prisma.customer.findFirst({
+            where: {
+                email: customerEmail
+            }
+        })
+        return NextResponse.json(customer);
+    } catch (error) {
+        return NextResponse.json({ message: "Customer not found" }, { status: 400 });
+    }
+
+    return NextResponse.json({ message: "Recebido" });
 }

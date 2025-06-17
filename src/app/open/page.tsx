@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { FiSearch, FiX } from "react-icons/fi"
 import { useState } from "react"
+import { FormTicket } from "./components/FormTicket"
 
 const schema = z.object({
     email: z.string().email("Digite o email do cliente para localizar.").min(1, "O campo email é obrigatório.")
@@ -56,6 +57,7 @@ export default function OpenTicket() {
                         </div>
                     </form>
                 )}
+                {customer !== null && <FormTicket />}
             </main>
         </div>
     )

@@ -56,6 +56,7 @@ export async function POST(request: Request) {
             }
         })
 
+        return NextResponse.json({ message: "Chamado registrado com sucesso!" });
     } catch (error) {
         return NextResponse.json({ error: "Falied to create a new ticket" }, { status: 400 });
     }
